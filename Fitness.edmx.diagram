@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c165b0cdc7e44b6eb5a1569ff905946f" Name="Diagram1">
+        <EntityTypeShape EntityType="FitnessModel1.MonitorProgress" Width="1.5" PointX="7" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FitnessModel1.tblActivity" Width="1.5" PointX="2.5" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="FitnessModel1.tblCalculateCalory" Width="1.5" PointX="4.375" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FitnessModel1.tblUser" Width="1.5" PointX="0.5" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="FitnessModel1.UserGoal" Width="1.5" PointX="5.75" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="FitnessModel1.FK_tblActivities_tblUser" ManuallyRouted="false" />
+        <InheritanceConnector EntityType="FitnessModel1.UserGoal" />
+        <AssociationConnector Association="FitnessModel1.tblActivityUserGoal" />
+        <AssociationConnector Association="FitnessModel1.tblCalculateCaloryMonitorProgress" />
+        <AssociationConnector Association="FitnessModel1.UserGoalMonitorProgress" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

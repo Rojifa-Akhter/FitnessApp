@@ -1,0 +1,275 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="FitnessModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="MonitorProgress">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="ActivityType" Type="varchar" MaxLength="50" />
+          <Property Name="GoalCalories" Type="float" />
+          <Property Name="CaloriesBurn" Type="float" />
+        </EntityType>
+        <EntityType Name="tblActivities">
+          <Key>
+            <PropertyRef Name="ActivityID" />
+          </Key>
+          <Property Name="ActivityID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="ActivityType" Type="varchar" MaxLength="50" />
+          <Property Name="Duration" Type="int" />
+          <Property Name="Distance" Type="float" />
+          <Property Name="Calories" Type="float" />
+          <Property Name="Sets" Type="int" />
+          <Property Name="Repetitions" Type="int" />
+          <Property Name="PosesCompleted" Type="int" />
+          <Property Name="ElevationGain" Type="float" />
+          <Property Name="ActivityDate" Type="date" />
+        </EntityType>
+        <EntityType Name="tblCalculateCalories">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ActivityType" Type="varchar" MaxLength="50" />
+          <Property Name="Duration" Type="int" />
+          <Property Name="Weight" Type="float" />
+          <Property Name="CaloriesBurned" Type="float" />
+        </EntityType>
+        <EntityType Name="tblUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="50" />
+          <Property Name="email" Type="varchar" MaxLength="50" />
+          <Property Name="password" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="UserGoals">
+          <Key>
+            <PropertyRef Name="GoalID" />
+          </Key>
+          <Property Name="GoalID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ActivityType" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="GoalCalories" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_tblActivities_tblUser">
+          <End Role="tblUser" Type="Self.tblUser" Multiplicity="0..1" />
+          <End Role="tblActivities" Type="Self.tblActivities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblActivities">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FitnessModel1StoreContainer">
+          <EntitySet Name="MonitorProgress" EntityType="Self.MonitorProgress" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblActivities" EntityType="Self.tblActivities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblCalculateCalories" EntityType="Self.tblCalculateCalories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblUser" EntityType="Self.tblUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserGoals" EntityType="Self.UserGoals" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tblActivities_tblUser" Association="Self.FK_tblActivities_tblUser">
+            <End Role="tblUser" EntitySet="tblUser" />
+            <End Role="tblActivities" EntitySet="tblActivities" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FitnessModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="MonitorProgress">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="ActivityType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="GoalCalories" Type="Double" />
+          <Property Name="CaloriesBurn" Type="Double" />
+          <NavigationProperty Name="tblCalculateCalory" Relationship="FitnessModel1.tblCalculateCaloryMonitorProgress" FromRole="MonitorProgress" ToRole="tblCalculateCalory" />
+          <NavigationProperty Name="UserGoal" Relationship="FitnessModel1.UserGoalMonitorProgress" FromRole="MonitorProgress" ToRole="UserGoal" />
+        </EntityType>
+        <EntityType Name="tblActivity">
+          <Key>
+            <PropertyRef Name="ActivityID" />
+          </Key>
+          <Property Name="ActivityID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="ActivityType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Duration" Type="Int32" />
+          <Property Name="Distance" Type="Double" />
+          <Property Name="Calories" Type="Double" />
+          <Property Name="Sets" Type="Int32" />
+          <Property Name="Repetitions" Type="Int32" />
+          <Property Name="PosesCompleted" Type="Int32" />
+          <Property Name="ElevationGain" Type="Double" />
+          <Property Name="ActivityDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="tblUser" Relationship="Self.FK_tblActivities_tblUser" FromRole="tblActivities" ToRole="tblUser" />
+          <NavigationProperty Name="UserGoals" Relationship="FitnessModel1.tblActivityUserGoal" FromRole="tblActivity" ToRole="UserGoal" />
+        </EntityType>
+        <EntityType Name="tblCalculateCalory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ActivityType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Duration" Type="Int32" />
+          <Property Name="Weight" Type="Double" />
+          <Property Name="CaloriesBurned" Type="Double" />
+          <NavigationProperty Name="MonitorProgresses" Relationship="FitnessModel1.tblCalculateCaloryMonitorProgress" FromRole="tblCalculateCalory" ToRole="MonitorProgress" />
+        </EntityType>
+        <EntityType Name="tblUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblActivities" Relationship="Self.FK_tblActivities_tblUser" FromRole="tblUser" ToRole="tblActivities" />
+        </EntityType>
+        <EntityType Name="UserGoal" BaseType="FitnessModel1.tblCalculateCalory">
+          <Property Name="GoalID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ActivityType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="GoalCalories" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tblActivity" Relationship="FitnessModel1.tblActivityUserGoal" FromRole="UserGoal" ToRole="tblActivity" />
+          <NavigationProperty Name="MonitorProgresses1" Relationship="FitnessModel1.UserGoalMonitorProgress" FromRole="UserGoal" ToRole="MonitorProgress" />
+        </EntityType>
+        <Association Name="FK_tblActivities_tblUser">
+          <End Role="tblUser" Type="Self.tblUser" Multiplicity="0..1" />
+          <End Role="tblActivities" Type="Self.tblActivity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblActivities">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FitnessEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="MonitorProgresses" EntityType="Self.MonitorProgress" />
+          <EntitySet Name="tblActivities" EntityType="Self.tblActivity" />
+          <EntitySet Name="tblCalculateCalories" EntityType="Self.tblCalculateCalory" />
+          <EntitySet Name="tblUsers" EntityType="Self.tblUser" />
+          <AssociationSet Name="FK_tblActivities_tblUser" Association="Self.FK_tblActivities_tblUser">
+            <End Role="tblUser" EntitySet="tblUsers" />
+            <End Role="tblActivities" EntitySet="tblActivities" />
+          </AssociationSet>
+          <AssociationSet Name="tblActivityUserGoal" Association="FitnessModel1.tblActivityUserGoal">
+            <End Role="tblActivity" EntitySet="tblActivities" />
+            <End Role="UserGoal" EntitySet="tblCalculateCalories" />
+          </AssociationSet>
+          <AssociationSet Name="tblCalculateCaloryMonitorProgress" Association="FitnessModel1.tblCalculateCaloryMonitorProgress">
+            <End Role="tblCalculateCalory" EntitySet="tblCalculateCalories" />
+            <End Role="MonitorProgress" EntitySet="MonitorProgresses" />
+          </AssociationSet>
+          <AssociationSet Name="UserGoalMonitorProgress" Association="FitnessModel1.UserGoalMonitorProgress">
+            <End Role="UserGoal" EntitySet="tblCalculateCalories" />
+            <End Role="MonitorProgress" EntitySet="MonitorProgresses" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="tblActivityUserGoal">
+          <End Type="FitnessModel1.tblActivity" Role="tblActivity" Multiplicity="1" />
+          <End Type="FitnessModel1.UserGoal" Role="UserGoal" Multiplicity="*" />
+        </Association>
+        <Association Name="tblCalculateCaloryMonitorProgress">
+          <End Type="FitnessModel1.tblCalculateCalory" Role="tblCalculateCalory" Multiplicity="1" />
+          <End Type="FitnessModel1.MonitorProgress" Role="MonitorProgress" Multiplicity="*" />
+        </Association>
+        <Association Name="UserGoalMonitorProgress">
+          <End Type="FitnessModel1.UserGoal" Role="UserGoal" Multiplicity="1" />
+          <End Type="FitnessModel1.MonitorProgress" Role="MonitorProgress" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FitnessModel1StoreContainer" CdmEntityContainer="FitnessEntities1">
+          <EntitySetMapping Name="MonitorProgresses">
+            <EntityTypeMapping TypeName="FitnessModel1.MonitorProgress">
+              <MappingFragment StoreEntitySet="MonitorProgress">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ActivityType" ColumnName="ActivityType" />
+                <ScalarProperty Name="GoalCalories" ColumnName="GoalCalories" />
+                <ScalarProperty Name="CaloriesBurn" ColumnName="CaloriesBurn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblActivities">
+            <EntityTypeMapping TypeName="FitnessModel1.tblActivity">
+              <MappingFragment StoreEntitySet="tblActivities">
+                <ScalarProperty Name="ActivityID" ColumnName="ActivityID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ActivityType" ColumnName="ActivityType" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="Distance" ColumnName="Distance" />
+                <ScalarProperty Name="Calories" ColumnName="Calories" />
+                <ScalarProperty Name="Sets" ColumnName="Sets" />
+                <ScalarProperty Name="Repetitions" ColumnName="Repetitions" />
+                <ScalarProperty Name="PosesCompleted" ColumnName="PosesCompleted" />
+                <ScalarProperty Name="ElevationGain" ColumnName="ElevationGain" />
+                <ScalarProperty Name="ActivityDate" ColumnName="ActivityDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblCalculateCalories">
+            <EntityTypeMapping TypeName="IsTypeOf(FitnessModel1.tblCalculateCalory)">
+              <MappingFragment StoreEntitySet="tblCalculateCalories">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CaloriesBurned" ColumnName="CaloriesBurned" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="ActivityType" ColumnName="ActivityType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(FitnessModel1.UserGoal)">
+              <MappingFragment StoreEntitySet="UserGoals">
+                <ScalarProperty Name="GoalCalories" ColumnName="GoalCalories" />
+                
+                <ScalarProperty Name="GoalID" ColumnName="GoalID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblUsers">
+            <EntityTypeMapping TypeName="FitnessModel1.tblUser">
+              <MappingFragment StoreEntitySet="tblUser">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
